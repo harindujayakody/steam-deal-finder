@@ -1,0 +1,86 @@
+// chrome.storage wrappers. Settings live in `sync` so they follow the profile;
+// the watchlist and cached prices live in `local` because they get big and
+// churn often.
+
+import { DEFAULT_SETTINGS } from './constants.js';
+
+const SETTINGS_KEY = 'settings';
+const WATCH_KEY = 'watchlist';
+const CACHE_KEY = 'priceCache';
+// Bumped when the cached shape changes (fx.js has swapped rate providers
+// twice — open.er-api.com's {rates,...} then CBSL's {rate,series,...} — both
+// incompatible with the current {rate,backstop,...} shape). Storing the
+// schema alongside the record means an old-shaped leftover from a prior
+// install is detected and discarded instead of being trusted at face value.
+const FX_KEY = 'fxCache';
+const FX_SCHEMA = 3;
+
+/** Deep-merge stored settings over defaults so new keys appear on upgrade. */
+function mergeSettings(stored) {
+  const s = structuredClone(DEFAULT_SETTINGS);
+  if (!stored) return s;
+  for (const [k, v] of Object.entries(stored)) {
+    if (v && typeof v === 'object' && !Array.isArray(v) && s[k]) {
+      Object.assign(s[k], v);
+    } else if (v !== undefined) {
+      s[k] = v;
+    }
+  }
+  return s;
+}
+
+export async function getSettings() {
+  const { [SETTINGS_KEY]: stored } = await chrome.storage.sync.get(SETTINGS_KEY);
+  return mergeSettings(stored);
+}
+
+export async function setSettings(patch) {
+  const current = await getSettings();
+  const next = mergeSettings({ ...current, ...patch });
+  await chrome.storage.sync.set({ [SETTINGS_KEY]: next });
+  return next;
+}
+
+export async function getWatchlist() {
+  const { [WATCH_KEY]: list } = await chrome.storage.local.get(WATCH_KEY);
+  return Array.isArray(list) ? list : [];
+}
+
+export async function saveWatchlist(list) {
+  await chrome.storage.local.set({ [WATCH_KEY]: list });
+  return list;
+}
+
+export async function getFxCache() {
+  const { [FX_KEY]: fx } = await chrome.storage.local.get(FX_KEY);
+  // A record from a previous fx.js provider has a different shape (no
+  // singular `.rate`, or an old `.rate` under different semantics) — treat
+  // anything not stamped with the current schema as if there were no cache.
+  if (!fx || fx.schema !== FX_SCHEMA || typeof fx.rate !== 'number') return null;
+  return fx;
+}
+
+export async function setFxCache(fx) {
+  await chrome.storage.local.set({ [FX_KEY]: { ...fx, schema: FX_SCHEMA } });
+}
+
+export async function getCache(key) {
+  const { [CACHE_KEY]: cache } = await chrome.storage.local.get(CACHE_KEY);
+  return cache?.[key] || null;
+}
+
+export async function putCache(key, value) {
+  const { [CACHE_KEY]: cache } = await chrome.storage.local.get(CACHE_KEY);
+  const next = cache || {};
+  next[key] = value;
+
+  // Keep the cache from growing without bound.
+  const entries = Object.entries(next);
+  if (entries.length > 400) {
+    entries.sort((a, b) => (b[1]?.fetchedAt || 0) - (a[1]?.fetchedAt || 0));
+    const trimmed = Object.fromEntries(entries.slice(0, 300));
+    await chrome.storage.local.set({ [CACHE_KEY]: trimmed });
+    return;
+  }
+  await chrome.storage.local.set({ [CACHE_KEY]: next });
+}

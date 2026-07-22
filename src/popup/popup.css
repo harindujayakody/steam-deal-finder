@@ -1,0 +1,177 @@
+body {
+  width: 400px;
+  max-height: 600px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-brand);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+.mark {
+  display: block;
+  width: 25px; height: 25px;
+  border-radius: 7px;
+  object-fit: cover;
+}
+
+.top-actions { display: flex; gap: 6px; }
+
+.current {
+  padding: 12px 14px;
+  background: linear-gradient(180deg, rgba(102, 192, 244, 0.08), transparent);
+  border-bottom: 1px solid var(--border);
+}
+.current-label {
+  font-family: var(--font-brand);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+
+.add { display: flex; gap: 7px; padding: 12px 14px 6px; }
+.add input { flex: 1; }
+
+.msg { padding: 0 14px 8px; font-size: 11px; color: var(--gold); }
+.msg.ok { color: var(--green); }
+
+.list-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 10px 14px 6px;
+  font-family: var(--font-brand);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-dim);
+}
+.fx { text-transform: none; letter-spacing: 0; font-size: 10px; font-weight: 500; }
+
+.list { display: flex; flex-direction: column; max-height: 340px; overflow-y: auto; }
+
+.item {
+  display: grid;
+  grid-template-columns: 54px 1fr auto;
+  gap: 11px;
+  align-items: center;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.item:hover { background: rgba(102, 192, 244, 0.04); }
+
+.item img {
+  width: 54px; height: 25px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--bg-2);
+}
+.item .noimg { width: 54px; height: 25px; border-radius: 4px; background: var(--bg-2); }
+
+.item-main { min-width: 0; }
+.item-name {
+  color: var(--text);
+  font-weight: 500;
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.item-name:hover { color: var(--blue); }
+
+.item-sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-top: 3px;
+  flex-wrap: wrap;
+}
+
+.item-right { text-align: right; }
+.item-price {
+  font-family: var(--font-brand);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.item-was {
+  font-size: 10px;
+  color: var(--text-faint);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.item-tools { display: flex; gap: 3px; margin-top: 5px; justify-content: flex-end; }
+.icon-btn {
+  appearance: none;
+  background: none;
+  border: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 2px 4px;
+  display: inline-flex;
+}
+.icon-btn:hover { color: var(--blue); }
+.icon-btn.rm:hover { color: var(--red); }
+
+.target-edit { display: flex; gap: 5px; margin-top: 6px; }
+.target-edit input { width: 92px; font-size: 11px; padding: 5px 8px; }
+
+.empty { padding: 26px 18px; color: var(--text-dim); text-align: center; font-size: 12px; }
+.hidden { display: none !important; }
+
+.foot {
+  padding: 8px 14px;
+  border-top: 1px solid var(--border);
+  font-size: 10px;
+  color: var(--text-faint);
+  min-height: 26px;
+}
+
+.snap-price {
+  font-family: var(--font-brand);
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+}
+.snap-sub { font-size: 11px; color: var(--text-dim); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.snap-best {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+}
+.snap-actions { margin-top: 9px; }

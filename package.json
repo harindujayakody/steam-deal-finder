@@ -1,0 +1,10 @@
+{
+  "name": "lkr-deal-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Chrome extension: real landed LKR cost for Steam purchases, region comparison, IsThereAnyDeal history, and installment-plan alerts.",
+  "type": "module",
+  "scripts": {
+    "test": "node test/run.mjs"
+  }
+}

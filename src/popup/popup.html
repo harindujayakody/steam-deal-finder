@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Steam Deal Finder</title>
+  <link rel="stylesheet" href="../theme/theme.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img class="mark" src="../../icons/sale48.png" alt=""> Steam Deal Finder</div>
+    <div class="top-actions">
+      <button id="refresh" class="btn ghost icon-only" title="Re-check every tracked title"></button>
+      <button id="options" class="btn ghost icon-only" title="Settings"></button>
+    </div>
+  </header>
+
+  <section id="current" class="current hidden">
+    <div class="current-label">On this page</div>
+    <div id="current-body"></div>
+  </section>
+
+  <section class="add">
+    <input id="add-input" type="text" placeholder="Paste a Steam URL or AppID" spellcheck="false">
+    <button id="add-btn" class="btn primary">Add</button>
+  </section>
+  <div id="add-msg" class="msg hidden"></div>
+
+  <section class="list-wrap">
+    <div class="list-head">
+      <span id="count">Watchlist</span>
+      <span id="fx" class="fx"></span>
+    </div>
+    <div id="list" class="list scroll-thin"></div>
+    <div id="empty" class="empty hidden">
+      Nothing tracked yet. Open a Steam store page and hit <strong>Track</strong>,
+      or paste a link above.
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span id="status"></span>
+  </footer>
+
+  <div class="credit">
+    Made with <span id="creditHeart" class="credit-heart"></span> by
+    <a href="https://infiax.com" target="_blank" rel="noopener">Infiax</a>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

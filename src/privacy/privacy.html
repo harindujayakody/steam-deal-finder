@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Steam Deal Finder — Privacy Policy</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+    @font-face {
+      font-family: 'Poppins';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('../../fonts/poppins-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('../../fonts/inter-variable.woff2') format('woff2');
+    }
+
+    :root {
+      --bg-0: #000000;
+      --bg-1: #0a0d12;
+      --bg-2: #12161d;
+      --bg-3: #191f29;
+      --border: #1c232f;
+      --border-strong: #2a3444;
+
+      --blue: #66c0f4;
+      --blue-deep: #1b2838;
+      --blue-dim: #3c5a75;
+      --green: #a4d007;
+      --green-deep: #5c8a00;
+      --gold: #e4b94f;
+      --red: #e5534b;
+
+      --text: #f2f5f8;
+      --text-dim: #8b98a5;
+      --text-faint: #57626f;
+
+      --font-brand: 'Poppins', 'Inter', system-ui, sans-serif;
+      --font-body: 'Inter', 'Poppins', system-ui, sans-serif;
+
+      --r-sm: 6px;
+      --r-md: 10px;
+      --r-lg: 14px;
+      --r-pill: 999px;
+
+      --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.55);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--bg-0);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding: 32px 20px 60px;
+    }
+
+    .page {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* ---------------- Hero & Header ---------------- */
+    .hero {
+      margin-bottom: 26px;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-family: var(--font-brand);
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .mark-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #1b2838 0%, #0a0d12 100%);
+      border: 1px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--green);
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .btn-back {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      background: transparent;
+      color: var(--text-dim);
+      font: 600 12.5px var(--font-body);
+      padding: 7px 14px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .btn-back:hover {
+      color: var(--text);
+      border-color: var(--blue);
+      background: var(--bg-3);
+    }
+
+    .lede {
+      color: var(--text-dim);
+      max-width: 62ch;
+      font-size: 13.5px;
+    }
+    .lede strong { color: var(--text); }
+
+    /* ---------------- Cards & Layout ---------------- */
+    .card {
+      background: var(--bg-1);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-card);
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-brand);
+      font-size: 13.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+    h2 svg { color: var(--blue); }
+
+    p {
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    p:last-child { margin-bottom: 0; }
+
+    .preview {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: var(--r-md);
+      background: rgba(102, 192, 244, 0.06);
+      border-left: 3px solid var(--blue);
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .preview b { color: #fff; font-weight: 600; }
+
+    .policy-list {
+      margin: 10px 0 14px 18px;
+      color: var(--text-dim);
+    }
+    .policy-list li {
+      margin-bottom: 8px;
+      line-height: 1.55;
+    }
+    .policy-list li strong {
+      color: var(--text);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: var(--r-pill);
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(164, 208, 7, 0.14);
+      color: var(--green);
+      margin-left: 6px;
+    }
+
+    .contact-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 16px;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+    .contact-card strong {
+      color: #fff;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    a {
+      color: var(--blue);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ---------------- Footer & Credit ---------------- */
+    .credit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 20px 0 10px;
+      font-size: 12px;
+      color: var(--text-faint);
+    }
+    .credit a {
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+    .credit a:hover { color: var(--blue); }
+
+    .credit-heart {
+      display: inline-flex;
+      color: var(--red);
+      animation: credit-pulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes credit-pulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(229, 83, 75, 0)); }
+      50% { transform: scale(1.18); filter: drop-shadow(0 0 5px rgba(229, 83, 75, 0.85)); }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 20px 14px 40px; }
+      .card { padding: 16px 18px; }
+      .brand { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+    <div class="hero-top">
+      <div class="brand">
+        <div class="mark-icon">$</div>
+        Steam Deal Finder
+      </div>
+      <a class="btn-back" href="../options/options.html">← Back to settings</a>
+    </div>
+    <p class="lede">
+      Privacy Policy &amp; Data Security Disclosures. <strong>Effective Date:</strong> July 2026.
+    </p>
+  </header>
+
+  <section class="card">
+    <h2>
+      <svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor"><path d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c11.9 5.2 19.5 16.9 19.5 29.9l0 135.2c0 148.9-97.1 279.7-238.1 320.3c-7.3 2.1-15 2.1-22.3 0C75.1 527.7-22 396.9-22 248L-22 112.7c0-13 7.6-24.7 19.5-29.9L186.6 2.9C190.8 1 195.4 0 200 0L256 0zM256 64L256 448c105.7-34.6 176-136.6 176-248l0-101.4L256 64z"/></svg>
+      1. Overview
+    </h2>
+    <p>
+      <strong>Steam Deal Finder</strong> ("the Extension") is committed to protecting your privacy and security.
+      This Privacy Policy outlines how the Extension operates, how local data is handled, and our zero-tracking data practices.
+    </p>
+    <div class="preview">
+      <b>Summary:</b> Steam Deal Finder does <strong>NOT</strong> collect, store, transmit, or sell any personal data, user accounts, browsing history, or telemetry. All preferences and watchlists remain 100% local on your device. <span class="badge">Zero Analytics</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor"><path d="M64 32C28.7 32 0 60.7 0 96l0 320c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm280 288l48 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-48 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm0-96l48 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-48 0c-13.3 0-24-10.7-24-24s10.7-24 24-24zm-192 0c0-13.3 10.7-24 24-24l64 0c13.3 0 24 10.7 24 24l0 96c0 13.3-10.7 24-24 24l-64 0c-13.3 0-24-10.7-24-24l0-96z"/></svg>
+      2. Data Collection &amp; Processing
+    </h2>
+    <p>
+      We operate under strict data minimization principles:
+    </p>
+    <ul class="policy-list">
+      <li>
+        <strong>No Personal Information:</strong> We do not collect names, email addresses, IP addresses, credentials, or payment details.
+      </li>
+      <li>
+        <strong>No Browsing Activity Tracking:</strong> The Extension does not track, log, or monitor your web browsing history. It functions only when you view Steam store pages (<code>store.steampowered.com</code>) to display currency conversions.
+      </li>
+      <li>
+        <strong>Local Device Storage (<code>chrome.storage</code>):</strong> All user settings (alert triggers, watchlist items, custom exchange rate overrides, and optional API keys) are stored locally on your device. This data is never sent to us or any central server.
+      </li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor"><path d="M352 256c0 22.2-1.2 43.6-3.3 64l-185.3 0c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64l185.3 0c2.2 20.4 3.3 41.8 3.3 64zm28.8-64l123.1 0c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64l-123.1 0c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64z"/></svg>
+      3. External API Services
+    </h2>
+    <p>
+      To calculate accurate LKR pricing and deal history, the Extension makes direct requests only to the following declared endpoints:
+    </p>
+    <ul class="policy-list">
+      <li>
+        <strong>ExchangeRate.fun API (<code>api.exchangerate.fun</code>):</strong> Used to fetch public, hourly-updated USD-to-LKR exchange rates. No user identifiers or tokens are included in these requests.
+      </li>
+      <li>
+        <strong>Steam Store API (<code>store.steampowered.com</code>):</strong> Used to fetch game titles, regular prices, and current sale discounts for active store pages.
+      </li>
+      <li>
+        <strong>IsThereAnyDeal API (<code>api.isthereanydeal.com</code>):</strong> Optional. Used only if you configure an ITAD API key to query 6-month historical deal pricing.
+      </li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor"><path d="M256 0c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480L40 480c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32z"/></svg>
+      4. Data Selling &amp; Sharing Policy
+    </h2>
+    <p>
+      In accordance with Google Chrome Web Store Developer Program Policies:
+    </p>
+    <ul class="policy-list">
+      <li>We do <strong>NOT</strong> sell, trade, or rent user data to third parties.</li>
+      <li>We do <strong>NOT</strong> process or transfer user data for advertising, credit evaluation, or profiling.</li>
+      <li>We do <strong>NOT</strong> inject third-party ads, affiliate link rewrites, or trackers.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>
+      <svg width="15" height="15" viewBox="0 0 512 512" fill="currentColor"><path d="M48 64C21.5 64 0 85.5 0 112l0 288c0 26.5 21.5 48 48 48l416 0c26.5 0 48-21.5 48-48l0-288c0-26.5-21.5-48-48-48L48 64zM48 128l416 0 0 32L256 288 48 160l0-32z"/></svg>
+      5. Contact Information
+    </h2>
+    <p>
+      For any questions, privacy inquiries, or support requests regarding Steam Deal Finder, please reach out to:
+    </p>
+    <div class="contact-card">
+      <strong>Infiax Development Team</strong>
+      Email: <a href="mailto:contact@infiax.com">contact@infiax.com</a><br>
+      Website: <a href="https://infiax.com" target="_blank" rel="noopener">https://infiax.com</a>
+    </div>
+  </section>
+
+  <div class="credit">
+    Made with <span class="credit-heart">❤</span> by
+    <a href="https://infiax.com" target="_blank" rel="noopener">Infiax</a>
+  </div>
+
+</div>
+</body>
+</html>

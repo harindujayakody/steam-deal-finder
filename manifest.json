@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "Steam Deal Finder",
+  "version": "1.0.0",
+  "description": "Real Steam-to-LKR pricing using a live USD/LKR rate, region comparison, and 6-month best-deal tracking for Sri Lankan gamers.",
+  "minimum_chrome_version": "116",
+
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications"
+  ],
+
+  "host_permissions": [
+    "https://store.steampowered.com/*",
+    "https://api.isthereanydeal.com/*",
+    "https://api.exchangerate.fun/*"
+  ],
+
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_title": "Steam Deal Finder",
+    "default_icon": {
+      "16": "icons/sale16.png",
+      "32": "icons/sale32.png",
+      "48": "icons/sale48.png",
+      "128": "icons/sale128.png"
+    }
+  },
+
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://store.steampowered.com/app/*",
+        "https://store.steampowered.com/sub/*",
+        "https://store.steampowered.com/bundle/*"
+      ],
+      "js": ["src/content/steam-page.js"],
+      "css": ["src/content/steam-page.css"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["fonts/*.woff2", "icons/sale48.png", "icons/stores/*.png"],
+      "matches": ["https://store.steampowered.com/*"]
+    }
+  ],
+
+  "icons": {
+    "16": "icons/sale16.png",
+    "32": "icons/sale32.png",
+    "48": "icons/sale48.png",
+    "128": "icons/sale128.png"
+  }
+}

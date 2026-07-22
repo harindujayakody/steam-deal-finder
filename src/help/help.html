@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Steam Deal Finder — Help</title>
+  <link rel="stylesheet" href="../theme/theme.css">
+  <link rel="stylesheet" href="../options/options.css">
+  <link rel="stylesheet" href="help.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+    <div class="brand"><img class="mark" src="../../icons/sale48.png" alt=""> Steam Deal Finder</div>
+    <p class="lede">
+      Help &amp; setup guide. <a href="../options/options.html">← Back to settings</a>
+    </p>
+  </header>
+
+  <section class="card">
+    <h2><span id="icKey" class="ic"></span> Getting an IsThereAnyDeal API key</h2>
+    <p class="hint">
+      This is optional — rupee conversion and Steam pricing work with no key at all.
+      A free key unlocks two things: the <strong>6-month best-deal tracker</strong>
+      (and its toolbar dot) and the <strong>other-stores price comparison</strong>
+      (EA, GOG, Epic, Ubisoft, Battle.net). It takes about two minutes.
+    </p>
+
+    <ol class="steps">
+      <li>
+        <div class="step-title">Create an IsThereAnyDeal account</div>
+        <div class="step-body">
+          Go to <a href="https://isthereanydeal.com" target="_blank" rel="noopener">isthereanydeal.com</a>
+          and sign up — email, or sign in with Steam/Google/etc. It's free.
+        </div>
+      </li>
+      <li>
+        <div class="step-title">Register an app</div>
+        <div class="step-body">
+          Open <a href="https://isthereanydeal.com/apps/my/" target="_blank" rel="noopener">isthereanydeal.com/apps/my</a>
+          and click <strong>Add application</strong>. Give it any name you like — e.g.
+          "Steam Deal Finder (personal)" — this is just a label for your own reference,
+          it doesn't need a public website.
+        </div>
+      </li>
+      <li>
+        <div class="step-title">Copy your API key</div>
+        <div class="step-body">
+          Once the app is created, its page shows an <strong>API key</strong> — a short
+          string of letters and numbers. Copy it.
+        </div>
+      </li>
+      <li>
+        <div class="step-title">Paste it into Steam Deal Finder</div>
+        <div class="step-body">
+          Open <a href="../options/options.html">Settings</a>, paste the key into the
+          <strong>IsThereAnyDeal</strong> section, click <strong>Test</strong> to confirm
+          it works, then <strong>Save settings</strong>.
+        </div>
+      </li>
+    </ol>
+
+    <div class="preview">
+      That's it — reload any Steam store page and the best-deal and other-stores
+      sections will start populating.
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span id="icPlay" class="ic"></span> Video walkthrough</h2>
+    <p class="hint">Placeholder — drop your own tutorial video embed here later.</p>
+    <!--
+      DUMMY EMBED — replace this whole <div class="video-embed"> block with a
+      real <iframe> (YouTube, Loom, etc.) once you have a walkthrough video.
+      Keeping it as a clearly-labeled placeholder rather than removing it so
+      it's easy to find and swap in.
+    -->
+    <div class="video-embed">
+      <div class="video-embed-inner">
+        <span class="video-embed-icon">▶</span>
+        <span>Video tutorial placeholder — embed goes here</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span id="icInfo" class="ic"></span> Common questions</h2>
+    <div class="faq">
+      <div class="faq-q">Do I need an API key to use Steam Deal Finder?</div>
+      <div class="faq-a">No. Rupee conversion, the region comparison, and the watchlist all work with no key. The key only unlocks the two ITAD-powered sections.</div>
+
+      <div class="faq-q">Is my API key sent anywhere else?</div>
+      <div class="faq-a">No — it's stored in your browser's local extension storage and sent only to IsThereAnyDeal's own API, exactly as needed for each lookup.</div>
+
+      <div class="faq-q">Why don't EA or Battle.net ever show up in "Other stores"?</div>
+      <div class="faq-a">IsThereAnyDeal tracks very few EA or Battle.net listings — both are largely exclusive to their own launchers. GOG, Epic, and Ubisoft show up far more often; this isn't a bug.</div>
+
+      <div class="faq-q">The 6-month best-deal card says "no history recorded" — why?</div>
+      <div class="faq-a">ITAD only has data for titles it has tracked a price change for in the window. New or rarely-discounted titles may simply have nothing recorded yet.</div>
+    </div>
+  </section>
+
+  <div class="credit">
+    Made with <span id="creditHeart" class="credit-heart"></span> by
+    <a href="https://infiax.com" target="_blank" rel="noopener">Infiax</a>
+    · <a href="../privacy/privacy.html">Privacy Policy</a>
+  </div>
+
+</div>
+<script type="module" src="help.js"></script>
+</body>
+</html>

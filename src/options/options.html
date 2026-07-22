@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Steam Deal Finder — Settings</title>
+  <link rel="stylesheet" href="../theme/theme.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+    <div class="hero-top">
+      <div class="brand"><img class="mark" src="../../icons/sale48.png" alt=""> Steam Deal Finder</div>
+      <a class="btn ghost" href="../help/help.html"><span id="icHelp" class="ic"></span> Help</a>
+    </div>
+    <p class="lede">
+      Steam bills Sri Lankan accounts in <strong>US dollars</strong> — there is no rupee
+      price to read off the page. Steam Deal Finder converts it for you using a live
+      USD/LKR exchange rate, no markup or guesswork added.
+    </p>
+  </header>
+
+  <section class="card">
+    <h2><span id="icRate" class="ic"></span> Exchange rate</h2>
+    <p class="hint">Sourced live, updated hourly — no card markup or fees added.</p>
+    <div class="rate-card">
+      <div class="rate-value" id="rateValue">—</div>
+      <div class="rate-meta" id="rateMeta">Loading…</div>
+    </div>
+    <div class="preview" id="preview">—</div>
+  </section>
+
+  <section class="card">
+    <h2><span id="icGlobe" class="ic"></span> Region comparison <span class="tag">reference only</span></h2>
+    <p class="hint">
+      Regions still priced in their own currency. Steam moved Sri Lanka, Turkey and
+      Argentina to USD, so those no longer differ.
+      <strong>Steam ties your store region to your payment method's country</strong> — a
+      cheaper region tells you whether a price is fair, it isn't a checkout you can use.
+    </p>
+    <div id="regions" class="regions"></div>
+  </section>
+
+  <section class="card">
+    <h2><span id="icKey" class="ic"></span> IsThereAnyDeal <span class="tag">optional</span></h2>
+    <p class="hint">
+      Without a key, Steam Deal Finder still works fully on rupee conversion and
+      region comparison. With a free key it also tracks each title's
+      <strong>best deal date over the last 6 months</strong> (lighting up the toolbar
+      dot when the current price matches it), and shows the cheapest prices at
+      <strong>EA, GOG, Epic, Ubisoft, and Battle.net</strong>.
+      Register at <a href="https://isthereanydeal.com/apps/my/" target="_blank" rel="noopener">isthereanydeal.com/apps/my</a>
+      — or see the <a href="../help/help.html">step-by-step guide</a>.
+    </p>
+    <div class="key-row">
+      <input type="password" id="itadKey" placeholder="API key" spellcheck="false" autocomplete="off">
+      <button id="itadReveal" class="btn ghost icon-only" type="button" title="Show / hide"></button>
+      <button id="itadTest" class="btn ghost" type="button">Test</button>
+    </div>
+    <div id="itadOut" class="calib-out"></div>
+  </section>
+
+  <section class="card">
+    <h2><span id="icBell" class="ic"></span> Alerts</h2>
+    <label class="check">
+      <input type="checkbox" id="alertsEnabled">
+      <span>Check tracked titles in the background and notify me</span>
+    </label>
+
+    <label class="field narrow">
+      <span>Check every</span>
+      <div class="input-suffix">
+        <input type="number" id="intervalMinutes" min="30" step="30">
+        <em>minutes</em>
+      </div>
+      <small>Minimum 30. Longer intervals are kinder to Steam's rate limits.</small>
+    </label>
+
+    <div class="checks">
+      <label class="check">
+        <input type="checkbox" id="onTargetPrice">
+        <span>A title falls to my target price</span>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="onSixMonthLow">
+        <span>A title matches its 6-month best price <em>(needs an ITAD key)</em></span>
+      </label>
+      <label class="field narrow inline">
+        <span>Discount reaches</span>
+        <div class="input-suffix">
+          <input type="number" id="onDiscountPct" min="0" max="100" step="5">
+          <em>% (0 = off)</em>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <div class="credit">
+    Made with <span id="creditHeart" class="credit-heart"></span> by
+    <a href="https://infiax.com" target="_blank" rel="noopener">Infiax</a>
+    · <a href="../privacy/privacy.html">Privacy Policy</a>
+  </div>
+
+  <footer class="save-bar">
+    <button id="save" class="btn primary" type="button">Save settings</button>
+    <button id="reset" class="btn ghost" type="button">Reset to defaults</button>
+    <span id="saveMsg" class="save-msg"></span>
+  </footer>
+
+</div>
+<script type="module" src="options.js"></script>
+</body>
+</html>

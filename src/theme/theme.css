@@ -1,0 +1,240 @@
+/* SteamDeal Pro — shared design tokens, fonts, and component classes.
+   Used by the extension's own pages (popup, options) via <link>, where a
+   :root scope is safe. The injected Steam-page panel does NOT link this file
+   — it runs inside store.steampowered.com's document, so it redeclares these
+   same values scoped under its own panel element instead of :root, to avoid
+   leaking custom properties onto a page we don't own. See steam-page.css. */
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../fonts/poppins-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../../fonts/poppins-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../fonts/poppins-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../fonts/poppins-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../../fonts/inter-variable.woff2') format('woff2');
+}
+
+:root {
+  /* surfaces — pure black base, barely lifted for depth */
+  --bg-0: #000000;
+  --bg-1: #0a0d12;
+  --bg-2: #12161d;
+  --bg-3: #191f29;
+  --border: #1c232f;
+  --border-strong: #2a3444;
+
+  /* Steam-derived accents */
+  --blue: #66c0f4;
+  --blue-deep: #1b2838;
+  --blue-dim: #3c5a75;
+  --green: #a4d007;
+  --green-deep: #5c8a00;
+  --gold: #e4b94f;
+  --red: #e5534b;
+
+  /* text */
+  --text: #f2f5f8;
+  --text-dim: #8b98a5;
+  --text-faint: #57626f;
+
+  /* type */
+  --font-brand: 'Poppins', 'Inter', sans-serif;
+  --font-body: 'Inter', 'Poppins', sans-serif;
+
+  /* geometry */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-pill: 999px;
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  background: var(--bg-0);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.icon { display: inline-block; vertical-align: -0.125em; flex: none; }
+
+/* ---------------------------------------------------------------- buttons */
+
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--bg-2);
+  color: var(--text);
+  font: 600 12.5px var(--font-body);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+}
+/* :where() keeps this generic hover at the same specificity as a single
+   class, so a two-class variant (.btn.primary, .btn.success, ...) still wins
+   the cascade on hover instead of the base hover rule clobbering the
+   variant's gradient background back to plain grey. */
+.btn:where(:hover):not(:disabled) { border-color: var(--blue); background: var(--bg-3); }
+.btn:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: 0.45; cursor: default; }
+
+.btn.primary {
+  background: linear-gradient(180deg, var(--blue) 0%, #4ba3d6 100%);
+  border-color: var(--blue);
+  color: #06121b;
+  font-weight: 700;
+}
+.btn.primary:hover:not(:disabled) { filter: brightness(1.08); }
+
+.btn.success {
+  background: linear-gradient(180deg, var(--green) 0%, var(--green-deep) 100%);
+  border-color: var(--green);
+  color: #0c1400;
+  font-weight: 700;
+}
+
+.btn.ghost { background: transparent; border-color: var(--border); color: var(--text-dim); }
+.btn.ghost:hover:not(:disabled) { color: var(--text); }
+
+.btn.danger { background: transparent; border-color: var(--border); color: var(--text-dim); }
+.btn.danger:hover:not(:disabled) { border-color: var(--red); color: var(--red); }
+
+.btn.icon-only { padding: 7px; }
+.btn.sm { padding: 4px 9px; font-size: 11.5px; }
+
+/* ---------------------------------------------------------------- inputs */
+
+.input, input[type="text"], input[type="number"], input[type="password"] {
+  appearance: none;
+  width: 100%;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--text);
+  font: 500 13px var(--font-body);
+  padding: 8px 10px;
+}
+.input:focus, input:focus { outline: none; border-color: var(--blue); }
+.input::placeholder, input::placeholder { color: var(--text-faint); }
+
+/* ---------------------------------------------------------------- pills */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--r-pill);
+  font: 700 10.5px var(--font-body);
+  letter-spacing: 0.02em;
+  line-height: 17px;
+}
+.pill.blue { background: rgba(102, 192, 244, 0.14); color: var(--blue); }
+.pill.green { background: rgba(164, 208, 7, 0.14); color: var(--green); }
+.pill.gold { background: rgba(228, 185, 79, 0.14); color: var(--gold); }
+.pill.dim { background: var(--bg-3); color: var(--text-dim); }
+
+/* ---------------------------------------------------------------- cards */
+
+.card {
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font: 700 11px var(--font-brand);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--blue);
+}
+.section-title .icon { color: var(--blue); }
+
+.hint { color: var(--text-dim); font-size: 12.5px; line-height: 1.55; }
+.hint strong, .hint b { color: var(--text); }
+
+/* ---------------------------------------------------------------- misc */
+
+.scroll-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+.scroll-thin::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+.scroll-thin::-webkit-scrollbar-thumb:hover { background: var(--blue-dim); }
+
+/* -------------------------------------------------------------- credit */
+
+.credit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 0 2px;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.credit a {
+  color: var(--text-dim);
+  font-weight: 600;
+  text-decoration: none;
+}
+.credit a:hover { color: var(--blue); }
+
+.credit-heart {
+  display: inline-flex;
+  color: var(--red);
+  animation: credit-pulse 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes credit-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(229, 83, 75, 0));
+  }
+  50% {
+    transform: scale(1.18);
+    filter: drop-shadow(0 0 5px rgba(229, 83, 75, 0.85));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .credit-heart { animation: none; }
+}

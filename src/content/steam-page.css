@@ -1,0 +1,335 @@
+/* Injected SteamDeal Pro panel.
+   Runs inside store.steampowered.com's document (an isolated JS world, but a
+   shared DOM/CSS world), so nothing here touches :root — every token is
+   scoped under #steamlk-panel. @font-face is duplicated from src/theme/theme.css
+   on purpose: that file is only linked from our own extension pages, and a
+   content-script stylesheet can't reach it via <link>, so the same @font-face
+   rules are restated here with paths relative to this file instead. */
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../../fonts/poppins-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../../fonts/poppins-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../../fonts/inter-variable.woff2') format('woff2');
+}
+
+#steamlk-panel {
+  /* surfaces */
+  --bg-0: #000000;
+  --bg-1: #0a0d12;
+  --bg-2: #12161d;
+  --bg-3: #191f29;
+  --border: #1c232f;
+  --border-strong: #2a3444;
+  /* accents */
+  --blue: #66c0f4;
+  --green: #a4d007;
+  --green-deep: #5c8a00;
+  --gold: #e4b94f;
+  --red: #e5534b;
+  /* text */
+  --text: #f2f5f8;
+  --text-dim: #8b98a5;
+  --text-faint: #57626f;
+
+  all: initial;
+  display: block;
+  margin: 0 0 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #05070a 0%, var(--bg-0) 100%);
+  color: var(--text);
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+}
+
+#steamlk-panel * { box-sizing: border-box; font-family: inherit; }
+#steamlk-panel a { text-decoration: none; }
+
+.stlk-icon { display: inline-block; vertical-align: -0.15em; flex: none; }
+
+.stlk-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--border);
+}
+
+.stlk-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.stlk-mark {
+  display: block;
+  width: 24px; height: 24px;
+  border-radius: 7px;
+  object-fit: cover;
+}
+
+.stlk-actions { display: flex; gap: 6px; }
+
+.stlk-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--bg-2);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 12px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+/* :where() keeps this generic hover at single-class specificity, so the
+   .active (tracking) variant still wins the cascade on hover instead of
+   losing its green gradient back to plain grey. */
+.stlk-btn:where(:hover):not(:disabled) { border-color: var(--blue); background: var(--bg-3); }
+.stlk-btn:disabled { opacity: 0.5; cursor: default; }
+.stlk-btn.ghost { background: transparent; color: var(--text-dim); }
+.stlk-btn.icon-only { padding: 6px; }
+.stlk-btn.active {
+  background: linear-gradient(180deg, var(--green) 0%, var(--green-deep) 100%);
+  border-color: var(--green);
+  color: #0c1400;
+}
+
+.stlk-body { padding: 16px; }
+
+.stlk-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-faint);
+  font-style: normal;
+  padding: 4px 0;
+}
+
+.stlk-hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+
+.stlk-price {
+  font-family: 'Poppins', sans-serif;
+  font-size: 34px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.stlk-price-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.stlk-was { text-decoration: line-through; color: var(--text-faint); }
+
+.stlk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(164, 208, 7, 0.15);
+  color: var(--green);
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11.5px;
+}
+
+.stlk-best {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(90deg, rgba(164, 208, 7, 0.16), rgba(164, 208, 7, 0.04));
+  border: 1px solid rgba(164, 208, 7, 0.35);
+  color: var(--green);
+  font-weight: 700;
+  font-size: 11.5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+}
+
+.stlk-fxline {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-faint);
+  font-size: 11px;
+}
+
+.stlk-section {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.stlk-section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--blue);
+  margin-bottom: 10px;
+}
+.stlk-section-title .stlk-icon { color: var(--blue); }
+.stlk-section-title .stlk-hint-dot {
+  margin-left: auto;
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  color: var(--text-faint);
+  font-size: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 700;
+}
+
+.stlk-deal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--bg-1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.stlk-deal-row.hit { border-color: rgba(164, 208, 7, 0.4); background: rgba(164, 208, 7, 0.06); }
+
+.stlk-deal-left { display: flex; flex-direction: column; gap: 2px; }
+.stlk-deal-amount { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 16px; color: var(--text); }
+.stlk-deal-date { font-size: 11.5px; color: var(--text-dim); display: flex; align-items: center; gap: 5px; }
+
+.stlk-note { font-size: 12px; color: var(--text-dim); margin: 4px 0; }
+.stlk-note.dim { color: var(--text-faint); font-size: 11px; }
+
+.stlk-warn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  color: var(--gold);
+  background: rgba(228, 185, 79, 0.08);
+  border-left: 2px solid var(--gold);
+  padding: 7px 10px;
+  margin-top: 10px;
+  border-radius: 0 6px 6px 0;
+}
+
+.stlk-regions { display: flex; flex-direction: column; gap: 3px; }
+
+.stlk-region {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 7px;
+  font-size: 12px;
+}
+.stlk-region:nth-child(odd) { background: var(--bg-1); }
+.stlk-region-name {
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stlk-region-native { color: var(--text-faint); font-size: 11px; font-variant-numeric: tabular-nums; }
+.stlk-region-lkr { color: var(--text); font-variant-numeric: tabular-nums; min-width: 78px; text-align: right; font-weight: 600; }
+.stlk-region.cheaper .stlk-region-lkr { color: var(--green); }
+
+.stlk-stores { display: flex; flex-direction: column; gap: 4px; }
+
+.stlk-store {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr) auto auto;
+  gap: 9px;
+  align-items: center;
+  padding: 7px 9px;
+  border-radius: 8px;
+  background: var(--bg-1);
+  border: 1px solid transparent;
+  color: var(--text) !important;
+  text-decoration: none !important;
+  font-size: 12px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.stlk-store:hover { border-color: var(--border-strong); background: var(--bg-2); }
+
+.stlk-store-icon {
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  object-fit: cover;
+}
+.stlk-store-icon-blank { background: var(--bg-2); }
+
+.stlk-store-name {
+  color: var(--text);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stlk-store-price {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  min-width: 72px;
+  text-align: right;
+}
+
+.stlk-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 3px 0;
+  font-size: 12px;
+}
+.stlk-row-label { color: var(--text-dim); }
+.stlk-row-value { color: var(--text); font-variant-numeric: tabular-nums; }
