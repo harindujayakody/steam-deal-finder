@@ -12,10 +12,16 @@ export const HOME_CURRENCY_LABEL = 'LKR';
 export const STEAM_API = 'https://store.steampowered.com/api';
 export const ITAD_API = 'https://api.isthereanydeal.com';
 
-// Keyless, open-CORS, hourly-updated FX API. One call returns USD-based rates
+// Keyless, open-CORS, hourly-updated FX APIs. One call returns USD-based rates
 // for every currency this extension needs — LKR for the headline number, and
 // everything else (INR, IDR, ...) for the region-comparison backstop.
+// Tried in order; if the primary source is down or returns no LKR rate, the
+// next source is tried before the cached rate (or an error) is used.
 export const EXCHANGE_RATE_API = 'https://api.exchangerate.fun/latest?base=USD';
+export const FX_SOURCES = [
+  { name: 'exchangerate.fun', url: 'https://api.exchangerate.fun/latest?base=USD' },
+  { name: 'open.er-api.com', url: 'https://open.er-api.com/v6/latest/USD' },
+];
 
 export const FX_TTL_MS = 12 * 60 * 60 * 1000; // rates move slowly; refetch twice a day
 export const PRICE_TTL_MS = 15 * 60 * 1000;   // don't re-hit Steam for the same page

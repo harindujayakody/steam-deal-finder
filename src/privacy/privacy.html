@@ -307,7 +307,7 @@
         <strong>No Browsing Activity Tracking:</strong> The Extension does not track, log, or monitor your web browsing history. It functions only when you view Steam store pages (<code>store.steampowered.com</code>) to display currency conversions.
       </li>
       <li>
-        <strong>Local Device Storage (<code>chrome.storage</code>):</strong> All user settings (alert triggers, watchlist items, custom exchange rate overrides, and optional API keys) are stored locally on your device. This data is never sent to us or any central server.
+        <strong>Local Device Storage (<code>chrome.storage</code>):</strong> All user settings (alert triggers, watchlist items, custom exchange rate overrides, and optional API keys) are stored locally on your device. This data is never sent to us or any central server. Your optional IsThereAnyDeal API key is kept in on-device-only storage (<code>chrome.storage.local</code>) and is never synced to your Google account or other devices; other settings use Chrome sync so they follow your profile.
       </li>
     </ul>
   </section>
@@ -322,7 +322,7 @@
     </p>
     <ul class="policy-list">
       <li>
-        <strong>ExchangeRate.fun API (<code>api.exchangerate.fun</code>):</strong> Used to fetch public, hourly-updated USD-to-LKR exchange rates. No user identifiers or tokens are included in these requests.
+        <strong>ExchangeRate.fun API (<code>api.exchangerate.fun</code>), with open.er-api.com as fallback:</strong> Used to fetch public, hourly-updated USD-to-LKR exchange rates. If the primary source is unreachable, the extension retries with the fallback source before using a cached rate. No user identifiers or tokens are included in these requests.
       </li>
       <li>
         <strong>Steam Store API (<code>store.steampowered.com</code>):</strong> Used to fetch game titles, regular prices, and current sale discounts for active store pages.

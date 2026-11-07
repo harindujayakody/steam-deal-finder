@@ -14,7 +14,8 @@
   "host_permissions": [
     "https://store.steampowered.com/*",
     "https://api.isthereanydeal.com/*",
-    "https://api.exchangerate.fun/*"
+    "https://api.exchangerate.fun/*",
+    "https://open.er-api.com/*"
   ],
 
   "background": {
