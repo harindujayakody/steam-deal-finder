@@ -1,10 +1,14 @@
 // chrome.storage wrappers. Settings live in `sync` so they follow the profile;
 // the watchlist and cached prices live in `local` because they get big and
-// churn often.
+// churn often. The ITAD API key is the exception: it is a secret, so it lives
+// in `local` only — `sync` data is uploaded to the user's Google account and
+// synced across devices, which is not where a plaintext API key belongs.
 
 import { DEFAULT_SETTINGS } from './constants.js';
 
 const SETTINGS_KEY = 'settings';
+// On-device-only key for the ITAD API key (see header comment).
+const ITAD_KEY = 'itadKey';
 const WATCH_KEY = 'watchlist';
 const CACHE_KEY = 'priceCache';
 // Bumped when the cached shape changes (fx.js has swapped rate providers
@@ -31,14 +35,35 @@ function mergeSettings(stored) {
 
 export async function getSettings() {
   const { [SETTINGS_KEY]: stored } = await chrome.storage.sync.get(SETTINGS_KEY);
-  return mergeSettings(stored);
+  const { [ITAD_KEY]: localKey } = await chrome.storage.local.get(ITAD_KEY);
+  let key = typeof localKey === 'string' ? localKey : '';
+  // One-time migration: a key saved in sync by an older version is moved to
+  // local storage and scrubbed from sync, so it stops being uploaded/synced.
+  if (stored?.itad?.key) {
+    if (!key) {
+      key = stored.itad.key;
+      await chrome.storage.local.set({ [ITAD_KEY]: key });
+    }
+    await chrome.storage.sync.set({
+      [SETTINGS_KEY]: { ...stored, itad: { ...stored.itad, key: '' } },
+    });
+  }
+  const merged = mergeSettings(stored);
+  merged.itad = { ...merged.itad, key };
+  return merged;
 }
 
 export async function setSettings(patch) {
+  const { itad, ...rest } = patch || {};
+  if (itad && typeof itad.key === 'string') {
+    // Route the secret to on-device-only storage; it never touches sync.
+    await chrome.storage.local.set({ [ITAD_KEY]: itad.key });
+  }
   const current = await getSettings();
-  const next = mergeSettings({ ...current, ...patch });
+  const next = mergeSettings({ ...current, ...rest });
+  next.itad = { ...next.itad, key: '' }; // never persist the key in sync
   await chrome.storage.sync.set({ [SETTINGS_KEY]: next });
-  return next;
+  return { ...next, itad: { ...next.itad, key: itad?.key ?? current.itad.key ?? '' } };
 }
 
 export async function getWatchlist() {

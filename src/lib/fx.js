@@ -1,7 +1,8 @@
-// Foreign exchange rates — sourced from exchangerate.fun (api.exchangerate.fun),
-// a keyless, open-CORS API updated hourly from multiple data sources. One call
-// returns USD-based rates for every currency this extension needs, so the same
-// response serves both jobs:
+// Foreign exchange rates — sourced from exchangerate.fun (api.exchangerate.fun)
+// first, with open.er-api.com as a fallback if the primary is unreachable or
+// returns no usable rate. Both are keyless, open-CORS APIs updated hourly from
+// multiple data sources. One call returns USD-based rates for every currency
+// this extension needs, so the same response serves both jobs:
 //
 //   - the headline number: what a Steam purchase (billed in USD) costs in LKR
 //   - the backstop: converting other regions' currencies (INR, IDR, ...) for
@@ -9,7 +10,7 @@
 //
 // No card markup, no fees — the rate as published, applied directly.
 
-import { EXCHANGE_RATE_API, FX_TTL_MS } from './constants.js';
+import { FX_SOURCES, FX_TTL_MS } from './constants.js';
 import { getFxCache, setFxCache } from './storage.js';
 
 let inflight = null;
@@ -31,28 +32,36 @@ export async function getRates({ force = false } = {}) {
   if (inflight) return inflight;
 
   inflight = (async () => {
-    try {
-      const res = await fetch(EXCHANGE_RATE_API, { cache: 'no-store' });
-      if (!res.ok) throw new Error(`exchangerate.fun HTTP ${res.status}`);
-      const json = await res.json();
-      const lkr = json?.rates?.LKR;
-      if (typeof lkr !== 'number') throw new Error('exchangerate.fun returned no LKR rate');
+    const errors = [];
+    for (const source of FX_SOURCES) {
+      try {
+        const res = await fetch(source.url, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`${source.name} HTTP ${res.status}`);
+        const json = await res.json();
+        const lkr = json?.rates?.LKR;
+        if (typeof lkr !== 'number') throw new Error(`${source.name} returned no LKR rate`);
 
-      const record = {
-        rate: lkr,
-        asOf: json.timestamp ? new Date(json.timestamp * 1000).toISOString() : null,
-        backstop: json.rates,
-        fetchedAt: Date.now()
-      };
-      await setFxCache(record);
-      return { ...record, stale: false };
-    } catch (err) {
-      if (cached) return { ...cached, stale: true, error: String(err) };
-      throw err;
-    } finally {
-      inflight = null;
+        // exchangerate.fun stamps `timestamp` (unix seconds); er-api uses
+        // `time_last_update_unix` (unix seconds) or `time_last_update` (string).
+        const ts = json.timestamp ?? json.time_last_update_unix;
+        const record = {
+          rate: lkr,
+          asOf: ts
+            ? new Date(ts * 1000).toISOString()
+            : (json.time_last_update ? new Date(json.time_last_update).toISOString() : null),
+          backstop: json.rates,
+          fetchedAt: Date.now()
+        };
+        await setFxCache(record);
+        return { ...record, stale: false };
+      } catch (err) {
+        errors.push(String(err));
+      }
     }
-  })();
+    const err = new Error(`All FX sources failed: ${errors.join('; ')}`);
+    if (cached) return { ...cached, stale: true, error: String(err) };
+    throw err;
+  })().finally(() => { inflight = null; });
 
   return inflight;
 }
